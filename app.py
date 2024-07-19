@@ -1,3 +1,4 @@
+import os
 from flask import Flask, request, jsonify
 from pymongo import MongoClient
 from bson.objectid import ObjectId
@@ -5,6 +6,10 @@ from flask_jwt_extended import JWTManager, create_access_token, jwt_required, ge
 from flask_swagger_ui import get_swaggerui_blueprint
 import datetime
 from functools import wraps
+from dotenv import load_dotenv
+
+# Load environment variables from a .env file
+load_dotenv()
 
 app = Flask(__name__)
 
@@ -13,7 +18,9 @@ app.config['JWT_SECRET_KEY'] = 'your_jwt_secret_key'  # Change this to a strong 
 app.config['JWT_ACCESS_TOKEN_EXPIRES'] = datetime.timedelta(days=1)
 jwt = JWTManager(app)
 
-client = MongoClient("mongodb+srv://suptotthitachakraborty:jWQEXt3z5BlEUBdY@flaskmongocluster.vtgxqfq.mongodb.net/?retryWrites=true&w=majority&appName=flaskmongocluster")
+# Get MongoDB URI from environment variables
+mongo_uri = os.getenv("MONGO_URI")
+client = MongoClient(mongo_uri)
 db = client.get_database('student_db')
 collection = db['student_records']
 user_collection = db['users']  # user collection is named 'users'
