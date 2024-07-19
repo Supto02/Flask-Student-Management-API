@@ -1,0 +1,211 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "Student API",
+        "description": "API for managing student records",
+        "version": "1.0.0"
+    },
+    "host": "127.0.0.1:5000",
+    "schemes": ["http"],
+    "securityDefinitions": {
+        "Bearer": {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header",
+            "description": "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\""
+        }
+    },
+    "security": [
+        {
+            "Bearer": []
+        }
+    ],
+    "paths": {
+        "/": {
+            "get": {
+                "summary": "Hello World",
+                "responses": {
+                    "200": {
+                        "description": "Returns a hello message"
+                    }
+                }
+            }
+        },
+        "/login": {
+            "post": {
+                "summary": "User login",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Login credentials",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "username": {
+                                    "type": "string"
+                                },
+                                "password": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Login successful"
+                    },
+                    "401": {
+                        "description": "Invalid credentials"
+                    }
+                }
+            }
+        },
+        "/addstudent": {
+            "post": {
+                "summary": "Add a new student",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Student object",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "name": {
+                                    "type": "string"
+                                },
+                                "roll": {
+                                    "type": "string"
+                                },
+                                "branch": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Student added successfully"
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/student": {
+            "get": {
+                "summary": "Get all students",
+                "responses": {
+                    "200": {
+                        "description": "A list of students",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "_id": {
+                                        "type": "string"
+                                    },
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "roll": {
+                                        "type": "string"
+                                    },
+                                    "branch": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/update/{id}": {
+            "put": {
+                "summary": "Update a student",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Student object",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "name": {
+                                    "type": "string"
+                                },
+                                "roll": {
+                                    "type": "string"
+                                },
+                                "branch": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Student updated successfully"
+                    },
+                    "404": {
+                        "description": "Student not found"
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/delete/{id}": {
+            "delete": {
+                "summary": "Delete a student",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Student deleted successfully"
+                    },
+                    "404": {
+                        "description": "Student not found"
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        }
+    }
+}
